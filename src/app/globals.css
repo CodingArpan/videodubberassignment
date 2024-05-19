@@ -15,15 +15,33 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+*{
+  user-select: none;
+}
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #17171e;
+}
+::-webkit-scrollbar {
+
+  width: 8px;
+
+  height: 10px;
+
+  background-color: #f5f5f500;
+
+}
+
+
+
+
+::-webkit-scrollbar-thumb {
+
+  background-color: #665dc3;
+
+  border-radius: 8px;
+
 }
 
 @layer utilities {
