@@ -20,7 +20,6 @@ const AudioWaveform = () => {
 
   // crate an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
-  let wsRegions;
   const [RegionStart, setRegionStart] = useState(0);
   const [RegionEnd, setRegionEnd] = useState(50);
 
@@ -64,7 +63,7 @@ const AudioWaveform = () => {
     if (wavesurferObj) {
       console.log(wavesurferObj);
       setDuration(Math.floor(wavesurferObj.getDuration())); // set the duration in local state
-      wsRegions = wavesurferObj.registerPlugin(RegionsPlugin.create());
+     let wsRegions = wavesurferObj.registerPlugin(RegionsPlugin.create());
 
       //   wsRegions.enableDragSelection({ color: "rgb(98, 255, 58,0.1)" });
       // once the waveform is ready, play the audio
