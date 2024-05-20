@@ -20,6 +20,7 @@ const AudioWaveform = () => {
 
   // crate an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
+  let wsRegions;
   const [RegionStart, setRegionStart] = useState(0);
   const [RegionEnd, setRegionEnd] = useState(50);
 
@@ -63,7 +64,7 @@ const AudioWaveform = () => {
     if (wavesurferObj) {
       console.log(wavesurferObj);
       setDuration(Math.floor(wavesurferObj.getDuration())); // set the duration in local state
-     let wsRegions = wavesurferObj.registerPlugin(RegionsPlugin.create());
+      wsRegions = wavesurferObj.registerPlugin(RegionsPlugin.create());
 
       //   wsRegions.enableDragSelection({ color: "rgb(98, 255, 58,0.1)" });
       // once the waveform is ready, play the audio
@@ -168,17 +169,19 @@ const AudioWaveform = () => {
       const original_buffer = wavesurferObj.renderer.audioData;
 
       // create a temporary new buffer array with the same length, sample rate and no of channels as the original audio
-      //   const new_buffer = wavesurferObj.backend.ac.createBuffer(
-      //     original_buffer.numberOfChannels,
-      //     original_buffer.length,
-      //     original_buffer.sampleRate
-      //   );
-      const audioCtx = new AudioContext();
-      const new_buffer = audioCtx.createBuffer(
-        original_buffer.numberOfChannels,
+    //   const new_buffer = wavesurferObj.backend.ac.createBuffer(
+    //     original_buffer.numberOfChannels,
+    //     original_buffer.length,
+    //     original_buffer.sampleRate
+    //   );
+	const audioCtx = new AudioContext();
+  const new_buffer = audioCtx.createBuffer(
+	original_buffer.numberOfChannels,
         original_buffer.length,
         original_buffer.sampleRate
-      );
+);
+
+      
 
       // create 2 indices:
       // left & right to the part to be trimmed
@@ -216,8 +219,7 @@ const AudioWaveform = () => {
       new_buffer.copyToChannel(combined, 0);
 
       // load the new_buffer, to restart the wavesurfer's waveform display
-      
-      wavesurferObj.loadBlob(new_buffer);
+      wavesurferObj.loadDecodedBuffer(new_buffer);
     }
   };
 
@@ -272,7 +274,7 @@ const AudioWaveform = () => {
 
         <div
           className="trim px-5 py-4 pt- bg-slate-800 rounded-lg cursor-pointer"
-          onClick={handleTrim}
+          
         >
           <div className="flex justify-center items-center gap-2">
             <FaCut className="text-xl" />
