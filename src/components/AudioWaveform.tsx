@@ -50,7 +50,7 @@ const AudioWaveform = () => {
         })
       );
     }
-  }, [wavesurferRef, wavesurferObj]);
+  }, [ wavesurferObj]);
 
   // once the file URL is ready, load the file to produce the waveform
   useEffect(() => {
@@ -110,31 +110,6 @@ const AudioWaveform = () => {
     if (wavesurferObj) wavesurferObj.setVolume(volume);
   }, [volume, wavesurferObj]);
 
-  // set zoom level of the wavesurfer object, whenever the zoom variable in state is changed
-  // useEffect(() => {
-  // 	if (wavesurferObj) wavesurferObj.zoom(zoom);
-  // }, [zoom, wavesurferObj]);
-
-  // when the duration of the audio is available, set the length of the region depending on it, so as to not exceed the total lenght of the audio
-  //   useEffect(() => {
-  //     if (wavesurferObj) {
-  //       wavesurferObj.on("ready", () => {
-  //         if (duration) {
-  //           // add a region with default length
-  //           wsRegions.addRegion({
-  //             start: Math.floor(duration / 2) - Math.floor(duration) / 5, // time in seconds
-  //             end: Math.floor(duration / 2), // time in seconds
-  //             //   color: "#", // color of the selected region, light hue of purple
-  //             content: "Resize me",
-  //             color: "rgb(98, 255, 58,0.1)",
-  //             drag: true,
-  //             resize: true,
-  //           });
-  //         }
-  //       });
-  //     }
-  //   }, [duration, wavesurferObj]);
-
   const handlePlayPause = (e) => {
     wavesurferObj.playPause();
     setPlaying(!playing);
@@ -151,76 +126,76 @@ const AudioWaveform = () => {
     setVolume(e.target.value);
   };
 
-  const handleZoomSlider = (e) => {
-    setZoom(e.target.value);
-  };
+//   const handleZoomSlider = (e) => {
+//     setZoom(e.target.value);
+//   };
 
-  const handleTrim = (e) => {
-    if (wavesurferObj) {
-      // get start and end points of the selected region
+//   const handleTrim = (e) => {
+//     if (wavesurferObj) {
+//       // get start and end points of the selected region
 
-      console.log(wavesurferObj);
+//       console.log(wavesurferObj);
 
-      const start = RegionStart;
-      const end = RegionEnd;
+//       const start = RegionStart;
+//       const end = RegionEnd;
 
-      // obtain the original array of the audio
-      const original_buffer = wavesurferObj.renderer.audioData;
+//       // obtain the original array of the audio
+//       const original_buffer = wavesurferObj.renderer.audioData;
 
-      // create a temporary new buffer array with the same length, sample rate and no of channels as the original audio
-    //   const new_buffer = wavesurferObj.backend.ac.createBuffer(
-    //     original_buffer.numberOfChannels,
-    //     original_buffer.length,
-    //     original_buffer.sampleRate
-    //   );
-	const audioCtx = new AudioContext();
-  const new_buffer = audioCtx.createBuffer(
-	original_buffer.numberOfChannels,
-        original_buffer.length,
-        original_buffer.sampleRate
-);
+//       // create a temporary new buffer array with the same length, sample rate and no of channels as the original audio
+//     //   const new_buffer = wavesurferObj.backend.ac.createBuffer(
+//     //     original_buffer.numberOfChannels,
+//     //     original_buffer.length,
+//     //     original_buffer.sampleRate
+//     //   );
+// 	const audioCtx = new AudioContext();
+//   const new_buffer = audioCtx.createBuffer(
+// 	original_buffer.numberOfChannels,
+//         original_buffer.length,
+//         original_buffer.sampleRate
+// );
 
       
 
-      // create 2 indices:
-      // left & right to the part to be trimmed
-      const first_list_index = start * original_buffer.sampleRate;
-      const second_list_index = end * original_buffer.sampleRate;
-      const second_list_mem_alloc =
-        original_buffer.length - end * original_buffer.sampleRate;
+//       // create 2 indices:
+//       // left & right to the part to be trimmed
+//       const first_list_index = start * original_buffer.sampleRate;
+//       const second_list_index = end * original_buffer.sampleRate;
+//       const second_list_mem_alloc =
+//         original_buffer.length - end * original_buffer.sampleRate;
 
-      // create a new array upto the region to be trimmed
-      const new_list = new Float32Array(parseInt(first_list_index));
+//       // create a new array upto the region to be trimmed
+//       const new_list = new Float32Array(parseInt(first_list_index));
 
-      // create a new array of region after the trimmed region
-      const second_list = new Float32Array(parseInt(second_list_mem_alloc));
+//       // create a new array of region after the trimmed region
+//       const second_list = new Float32Array(parseInt(second_list_mem_alloc));
 
-      // create an array to combine the 2 parts
-      const combined = new Float32Array(original_buffer.length);
+//       // create an array to combine the 2 parts
+//       const combined = new Float32Array(original_buffer.length);
 
-      // 2 channels: 1-right, 0-left
-      // copy the buffer values for the 2 regions from the original buffer
+//       // 2 channels: 1-right, 0-left
+//       // copy the buffer values for the 2 regions from the original buffer
 
-      // for the region to the left of the trimmed section
-      original_buffer.copyFromChannel(new_list, 1);
-      original_buffer.copyFromChannel(new_list, 0);
+//       // for the region to the left of the trimmed section
+//       original_buffer.copyFromChannel(new_list, 1);
+//       original_buffer.copyFromChannel(new_list, 0);
 
-      // for the region to the right of the trimmed section
-      original_buffer.copyFromChannel(second_list, 1, second_list_index);
-      original_buffer.copyFromChannel(second_list, 0, second_list_index);
+//       // for the region to the right of the trimmed section
+//       original_buffer.copyFromChannel(second_list, 1, second_list_index);
+//       original_buffer.copyFromChannel(second_list, 0, second_list_index);
 
-      // create the combined buffer for the trimmed audio
-      combined.set(new_list);
-      combined.set(second_list, first_list_index);
+//       // create the combined buffer for the trimmed audio
+//       combined.set(new_list);
+//       combined.set(second_list, first_list_index);
 
-      // copy the combined array to the new_buffer
-      new_buffer.copyToChannel(combined, 1);
-      new_buffer.copyToChannel(combined, 0);
+//       // copy the combined array to the new_buffer
+//       new_buffer.copyToChannel(combined, 1);
+//       new_buffer.copyToChannel(combined, 0);
 
-      // load the new_buffer, to restart the wavesurfer's waveform display
-      wavesurferObj.loadDecodedBuffer(new_buffer);
-    }
-  };
+//       // load the new_buffer, to restart the wavesurfer's waveform display
+//       wavesurferObj.loadDecodedBuffer(new_buffer);
+//     }
+//   };
 
   return (
     <section className="waveform-container w-full">
