@@ -88,12 +88,11 @@ const AudioWaveform = () => {
       });
 
       // if multiple regions are created, then remove all the previous regions so that only 1 is present at any given time
-      wsRegions.on("region-updated", (region) => {
-        console.log(region);
-        setRegionStart(region.start);
-        setRegionEnd(region.end);
-        
-      });
+    //   wsRegions.on("region-updated", (region) => {
+    //     console.log(region);
+    //     setRegionStart(region.start);
+    //     setRegionEnd(region.end);
+    //   });
     }
   }, [Duration, wavesurferObj]);
 
@@ -123,11 +122,11 @@ const AudioWaveform = () => {
       <div className="" ref={wavesurferRef} id="waveform" />
       <div className="" ref={timelineRef} id="wave-timeline" />
 
-      {/* <div className="controls flex flex-row justify-center items-center gap-5 py-20">
+      <div className="controls flex flex-row justify-center items-center gap-5 py-20">
         <div
           title="play/pause"
           className="controls"
-          onClick={handlePlayPause}
+          onClick={(e) => handlePlayPause(e)}
           className="px-16 py-4 bg-slate-800 rounded-full cursor-pointer"
         >
           <div>
@@ -142,7 +141,7 @@ const AudioWaveform = () => {
         <div
           title="reload"
           className="controls"
-          onClick={handleReload}
+          onClick={(e) => handleReload(e)}
           className="px-5 py-4  rounded-full cursor-pointer"
         >
           <div>
@@ -162,7 +161,7 @@ const AudioWaveform = () => {
             max="1"
             step="0.05"
             value={volume}
-            onChange={handleVolumeSlider}
+            onChange={(e) => handleVolumeSlider(e)}
             className="slider volume-slider"
           />
         </div>
@@ -173,7 +172,7 @@ const AudioWaveform = () => {
             <p className="text-xl">Trim</p>
           </div>
         </div>
-      </div> */}
+      </div>
     </section>
   );
 };
