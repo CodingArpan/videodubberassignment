@@ -124,10 +124,9 @@ const AudioWaveform = () => {
 
       <div className="controls flex flex-row justify-center items-center gap-5 py-20">
         <div
+          className="controls px-16 py-4 bg-slate-800 rounded-full cursor-pointer"
           title="play/pause"
-          className="controls"
           onClick={(e) => handlePlayPause(e)}
-          className="px-16 py-4 bg-slate-800 rounded-full cursor-pointer"
         >
           <div>
             {!playing ? (
@@ -139,10 +138,9 @@ const AudioWaveform = () => {
         </div>
 
         <div
+          className=" controlspx-5 py-4  rounded-full cursor-pointer"
           title="reload"
-          className="controls"
           onClick={(e) => handleReload(e)}
-          className="px-5 py-4  rounded-full cursor-pointer"
         >
           <div>
             <MdOutlineReplay className="text-2xl" />
