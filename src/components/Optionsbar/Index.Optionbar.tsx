@@ -8,7 +8,7 @@ const IndexOptionbar = () => {
         "remover","pitcher","cutter","merger","limiter","expander","noise gate","de-esser","reverb","delay","chorus","flanger"
     ]
   return (
-    <div className="drawer text-gray-400 bg-transparent absolute">
+    <div className="drawer text-gray-400 bg-transparent absolute z-50">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content p-3">
         {/* Page content here */}
