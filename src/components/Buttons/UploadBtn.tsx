@@ -15,7 +15,7 @@ const UploadBtn = ({ setUpload }) => {
     }else{
         setUpload(false);
     }
-  }, [file, setFileURL]);
+  }, [file]);
 
   const handleButtonClick = () => {
     inputFile.current.click();
