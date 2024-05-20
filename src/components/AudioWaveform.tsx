@@ -9,23 +9,19 @@ import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import { MdOutlineReplay } from "react-icons/md";
 import { FaCut } from "react-icons/fa";
-// import ToggleButton from './ToggleButton';
 
 const AudioWaveform = () => {
   const wavesurferRef = useRef(null);
   const timelineRef = useRef(null);
 
   // fetch file url from the context
-  const { fileURL, setFileURL } = useContext(FileContext);
+  const { fileURL } = useContext(FileContext);
 
   // crate an instance of the wavesurfer
   const [wavesurferObj, setWavesurferObj] = useState();
-  const [RegionStart, setRegionStart] = useState(0);
-  const [RegionEnd, setRegionEnd] = useState(50);
 
   const [playing, setPlaying] = useState(true); // to keep track whether audio is currently playing or not
   const [volume, setVolume] = useState(1); // to control volume level of the audio. 0-mute, 1-max
-  const [zoom, setZoom] = useState(1); // to control the zoom level of the waveform
   const [Duration, setDuration] = useState(0); // duration is used to set the default region of selection for trimming the audio
 
   // create the waveform inside the correct component
@@ -96,14 +92,10 @@ const AudioWaveform = () => {
         console.log(region);
         setRegionStart(region.start);
         setRegionEnd(region.end);
-        // const regions = region.wavesurfer.regions.list;
-        // const keys = Object.keys(regions);
-        // if (keys.length > 1) {
-        //   regions[keys[0]].remove();
-        // }
+        
       });
     }
-  }, [wavesurferObj]);
+  }, [Duration, wavesurferObj]);
 
   // set volume of the wavesurfer object, whenever volume variable in state is changed
   useEffect(() => {
@@ -125,75 +117,6 @@ const AudioWaveform = () => {
   const handleVolumeSlider = (e) => {
     setVolume(e.target.value);
   };
-
-  //   const handleZoomSlider = (e) => {
-  //     setZoom(e.target.value);
-  //   };
-
-  //   const handleTrim = (e) => {
-  //     if (wavesurferObj) {
-  //       // get start and end points of the selected region
-
-  //       console.log(wavesurferObj);
-
-  //       const start = RegionStart;
-  //       const end = RegionEnd;
-
-  //       // obtain the original array of the audio
-  //       const original_buffer = wavesurferObj.renderer.audioData;
-
-  //       // create a temporary new buffer array with the same length, sample rate and no of channels as the original audio
-  //     //   const new_buffer = wavesurferObj.backend.ac.createBuffer(
-  //     //     original_buffer.numberOfChannels,
-  //     //     original_buffer.length,
-  //     //     original_buffer.sampleRate
-  //     //   );
-  // 	const audioCtx = new AudioContext();
-  //   const new_buffer = audioCtx.createBuffer(
-  // 	original_buffer.numberOfChannels,
-  //         original_buffer.length,
-  //         original_buffer.sampleRate
-  // );
-
-  //       // create 2 indices:
-  //       // left & right to the part to be trimmed
-  //       const first_list_index = start * original_buffer.sampleRate;
-  //       const second_list_index = end * original_buffer.sampleRate;
-  //       const second_list_mem_alloc =
-  //         original_buffer.length - end * original_buffer.sampleRate;
-
-  //       // create a new array upto the region to be trimmed
-  //       const new_list = new Float32Array(parseInt(first_list_index));
-
-  //       // create a new array of region after the trimmed region
-  //       const second_list = new Float32Array(parseInt(second_list_mem_alloc));
-
-  //       // create an array to combine the 2 parts
-  //       const combined = new Float32Array(original_buffer.length);
-
-  //       // 2 channels: 1-right, 0-left
-  //       // copy the buffer values for the 2 regions from the original buffer
-
-  //       // for the region to the left of the trimmed section
-  //       original_buffer.copyFromChannel(new_list, 1);
-  //       original_buffer.copyFromChannel(new_list, 0);
-
-  //       // for the region to the right of the trimmed section
-  //       original_buffer.copyFromChannel(second_list, 1, second_list_index);
-  //       original_buffer.copyFromChannel(second_list, 0, second_list_index);
-
-  //       // create the combined buffer for the trimmed audio
-  //       combined.set(new_list);
-  //       combined.set(second_list, first_list_index);
-
-  //       // copy the combined array to the new_buffer
-  //       new_buffer.copyToChannel(combined, 1);
-  //       new_buffer.copyToChannel(combined, 0);
-
-  //       // load the new_buffer, to restart the wavesurfer's waveform display
-  //       wavesurferObj.loadDecodedBuffer(new_buffer);
-  //     }
-  //   };
 
   return (
     <section className="waveform-container w-full">
@@ -251,29 +174,6 @@ const AudioWaveform = () => {
           </div>
         </div>
       </div>
-
-      <div className="all-controls">
-        {/* <div className="left-container"> */}
-        {/* <ToggleButton /> */}
-
-        {/* </div> */}
-        {/* <div className="right-container"> */}
-        {/* <div className="volume-slide-container">
-            <p className="material-icons zoom-icon">remove_circle</p>
-            <input
-              type="range"
-              min="1"
-              max="1000"
-              value={zoom}
-              onChange={handleZoomSlider}
-              className="slider zoom-slider"
-            />
-            <p className="material-icons zoom-icon">add_circle</p>
-          </div> */}
-        {/* <div className="volume-slide-container"> */}
-      </div>
-      {/* </div> */}
-      {/* </div> */}
     </section>
   );
 };
