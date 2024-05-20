@@ -123,7 +123,7 @@ const AudioWaveform = () => {
       <div className="" ref={wavesurferRef} id="waveform" />
       <div className="" ref={timelineRef} id="wave-timeline" />
 
-      <div className="controls flex flex-row justify-center items-center gap-5 py-20">
+      {/* <div className="controls flex flex-row justify-center items-center gap-5 py-20">
         <div
           title="play/pause"
           className="controls"
@@ -173,7 +173,7 @@ const AudioWaveform = () => {
             <p className="text-xl">Trim</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
