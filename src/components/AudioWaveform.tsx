@@ -128,7 +128,7 @@ const AudioWaveform = () => {
           title="play/pause"
           className="controls"
           onClick={handlePlayPause}
-          className="px-16 py-4 pt- bg-slate-800 rounded-full cursor-pointer"
+          className="px-16 py-4 bg-slate-800 rounded-full cursor-pointer"
         >
           <div>
             {!playing ? (
